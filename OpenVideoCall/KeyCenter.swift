@@ -6,8 +6,6 @@
 //  Copyright © 2016 Agora. All rights reserved.
 //
 
-import Foundation
-
 struct KeyCenter {
-    static let AppId = <#Your App Id#>
+    static let AppId: String = <#Your App Id#>
 }
