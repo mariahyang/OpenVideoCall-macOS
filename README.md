@@ -18,7 +18,7 @@ NOTICE: before building, you need to
 	you can get your app id at https://dashboard.agora.io
 
 
-2. update libraries
+2. update libraries at OpenVideoCall/libs
 
 
 Enjoy video calling!
