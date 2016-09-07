@@ -8,7 +8,6 @@
 
 import Cocoa
 import Quartz.ImageKit
-import WebKit
 
 protocol RoomVCDelegate: class {
     func roomVCNeedClose(roomVC: RoomViewController)
@@ -385,7 +384,7 @@ private extension RoomViewController {
         let code = agoraKit.joinChannelByKey(nil, channelName: roomName, info: nil, uid: 0, joinSuccess: nil)
         if code != 0 {
             dispatch_async(dispatch_get_main_queue(), {
-                self.alertEngineString("\(NSLocalizedString("Join channel failed: ", comment: ""))\(code)")
+                self.alertEngineString("Join channel failed: \(code)")
             })
         }
         
