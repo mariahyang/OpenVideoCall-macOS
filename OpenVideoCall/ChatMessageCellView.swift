@@ -12,20 +12,20 @@ class ChatMessageCellView: NSTableCellView {
     @IBOutlet weak var colorView: NSView!
     @IBOutlet weak var messageLabel: NSTextField!
     
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
         
         colorView?.layer?.cornerRadius = 2
         
         messageLabel?.usesSingleLineMode = false
         messageLabel?.cell?.wraps = true
-        messageLabel?.cell?.scrollable = false
+        messageLabel?.cell?.isScrollable = false
     }
     
-    func setMessage(message: Message) {
+    func setMessage(_ message: Message) {
         messageLabel.stringValue = message.text
         
         colorView?.wantsLayer = true
-        colorView?.layer?.backgroundColor = message.type.color().CGColor
+        colorView?.layer?.backgroundColor = message.type.color().cgColor
     }
 }

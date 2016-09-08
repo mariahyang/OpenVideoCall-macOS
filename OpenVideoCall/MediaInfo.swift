@@ -9,7 +9,7 @@
 import Foundation
 
 struct MediaInfo {
-    var resolution = CGSizeZero
+    var resolution = CGSize.zero
     var fps = 0
     var bitRate = 0
     
@@ -45,11 +45,11 @@ extension AgoraRtcVideoProfile {
     
     func resolution() -> CGSize? {
         switch self {
-        case ._VideoProfile_120P: return CGSizeMake(160, 120)
-        case ._VideoProfile_240P: return CGSizeMake(320, 240)
-        case ._VideoProfile_360P: return CGSizeMake(640, 360)
-        case ._VideoProfile_480P: return CGSizeMake(640, 480)
-        case ._VideoProfile_720P: return CGSizeMake(1280, 720)
+        case ._VideoProfile_120P: return CGSize(width: 160, height: 120)
+        case ._VideoProfile_240P: return CGSize(width: 320, height: 240)
+        case ._VideoProfile_360P: return CGSize(width: 640, height: 360)
+        case ._VideoProfile_480P: return CGSize(width: 640, height: 480)
+        case ._VideoProfile_720P: return CGSize(width: 1280, height: 720)
         default: return nil
         }
     }

@@ -10,6 +10,6 @@ import Cocoa
 
 class ReplacementSegue: NSStoryboardSegue {
     override func perform() {
-        sourceController.view.window?.contentViewController = destinationController as? NSViewController
+        (sourceController as AnyObject).view.window?.contentViewController = destinationController as? NSViewController
     }
 }

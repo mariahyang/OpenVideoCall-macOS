@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol SettingsVCDelegate: class {
-    func settingsVC(settingsVC: SettingsViewController, closeWithProfile videoProfile: AgoraRtcVideoProfile)
+    func settingsVC(_ settingsVC: SettingsViewController, closeWithProfile videoProfile: AgoraRtcVideoProfile)
 }
 
 class SettingsViewController: NSViewController {
@@ -23,26 +23,26 @@ class SettingsViewController: NSViewController {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        view.layer?.backgroundColor = NSColor.white.cgColor
         
         loadProfileItems()
     }
     
-    @IBAction func doProfileChanged(sender: NSPopUpButton) {
+    @IBAction func doProfileChanged(_ sender: NSPopUpButton) {
         let profile = AgoraRtcVideoProfile.validProfileList()[sender.indexOfSelectedItem]
         videoProfile = profile
     }
     
-    @IBAction func doConfirmClicked(sender: NSButton) {
+    @IBAction func doConfirmClicked(_ sender: NSButton) {
         delegate?.settingsVC(self, closeWithProfile: videoProfile)
     }
 }
 
 private extension SettingsViewController {
     func loadProfileItems() {
-        profilePopUpButton.addItemsWithTitles(AgoraRtcVideoProfile.validProfileList().map { (res) -> String in
+        profilePopUpButton.addItems(withTitles: AgoraRtcVideoProfile.validProfileList().map { (res) -> String in
             return res.description()
         })
-        profilePopUpButton.selectItemWithTitle(videoProfile.description())
+        profilePopUpButton.selectItem(withTitle: videoProfile.description())
     }
 }

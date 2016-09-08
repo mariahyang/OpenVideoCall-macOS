@@ -10,15 +10,14 @@ import Cocoa
 import CoreGraphics
 
 class Window {
-    private(set) var id: CGWindowID = 0
-    private(set) var name: String!
-    private(set) var image: NSImage!
+    fileprivate(set) var id: CGWindowID = 0
+    fileprivate(set) var name: String!
+    fileprivate(set) var image: NSImage!
     
     init?(windowDic: NSDictionary) {
-        var bounds = CGRect()
         let windowBounds = windowDic[Window.convertCFString(kCGWindowBounds)] as! CFDictionary
-        CGRectMakeWithDictionaryRepresentation(windowBounds, &bounds)
-        if CGRectGetWidth(bounds) < 100 || CGRectGetHeight(bounds) < 100 {
+        let bounds = CGRect(dictionaryRepresentation: windowBounds)
+        guard bounds != nil && bounds!.width > 100 && bounds!.height > 100 else {
             return nil
         }
         
@@ -29,7 +28,7 @@ class Window {
             let cfName = ownerName as! CFString
             name = Window.convertCFString(cfName)
         }
-        if let name = name where name == "Dock" {
+        if let name = name , name == "Dock" {
             return nil
         }
         
@@ -40,7 +39,7 @@ class Window {
         self.image = image
     }
     
-    private init() {}
+    fileprivate init() {}
     
     static func fullScreenWindow() -> Window {
         let window = Window()
@@ -49,9 +48,9 @@ class Window {
         return window
     }
     
-    private static func imageOfWindow(windowId: CGWindowID) -> NSImage {
-        if let screenShot = CGWindowListCreateImage(CGRectNull, .OptionIncludingWindow, CGWindowID(windowId), .Default) {
-            let bitmapRep = NSBitmapImageRep(CGImage: screenShot)
+    fileprivate static func imageOfWindow(_ windowId: CGWindowID) -> NSImage {
+        if let screenShot = CGWindowListCreateImage(CGRect.null, .optionIncludingWindow, CGWindowID(windowId), CGWindowImageOption()) {
+            let bitmapRep = NSBitmapImageRep(cgImage: screenShot)
             let image = NSImage()
             image.addRepresentation(bitmapRep)
             return image
@@ -60,9 +59,9 @@ class Window {
         }
     }
     
-    private static func imageOfFullScreen() -> NSImage {
-        if let screenShot = CGWindowListCreateImage(CGRectInfinite, .OptionOnScreenOnly, CGWindowID(0), .Default) {
-            let bitmapRep = NSBitmapImageRep(CGImage: screenShot)
+    fileprivate static func imageOfFullScreen() -> NSImage {
+        if let screenShot = CGWindowListCreateImage(CGRect.infinite, .optionOnScreenOnly, CGWindowID(0), CGWindowImageOption()) {
+            let bitmapRep = NSBitmapImageRep(cgImage: screenShot)
             let image = NSImage()
             image.addRepresentation(bitmapRep)
             return image
@@ -74,7 +73,7 @@ class Window {
 
 class WindowList {
     var items = [ImageBrowserItem]()
-    private var list = [Window]() {
+    fileprivate var list = [Window]() {
         didSet {
             var items = [ImageBrowserItem]()
             for window in list {
@@ -88,7 +87,7 @@ class WindowList {
         var list = [Window]()
         list.append(Window.fullScreenWindow())
         
-        if let windowDicCFArray = CGWindowListCopyWindowInfo([.OptionOnScreenOnly, .ExcludeDesktopElements], 0) {
+        if let windowDicCFArray = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], 0) {
             let windowDicList = windowDicCFArray as NSArray
             
             for windowElement in windowDicList {
@@ -107,14 +106,14 @@ class WindowList {
 }
 
 private extension Window {
-    class func convertCFString(cfString: CFString) -> String {
+    class func convertCFString(_ cfString: CFString) -> String {
         let string = cfString as NSString
         return string as String
         
     }
     
-    class func convertCFNumber(cfNumber: CFNumber) -> CGWindowID {
+    class func convertCFNumber(_ cfNumber: CFNumber) -> CGWindowID {
         let number = cfNumber as NSNumber
-        return number.unsignedIntValue
+        return number.uint32Value
     }
 }

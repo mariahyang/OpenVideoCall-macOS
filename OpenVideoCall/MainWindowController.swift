@@ -13,8 +13,8 @@ class MainWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
         
-        window?.styleMask |= NSFullSizeContentViewWindowMask
+        window?.styleMask.insert(.fullSizeContentView)
         window?.titlebarAppearsTransparent = true
-        window?.movableByWindowBackground = true
+        window?.isMovableByWindowBackground = true
     }
 }

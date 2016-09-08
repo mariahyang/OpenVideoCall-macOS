@@ -29,14 +29,14 @@ class DevicesViewController: NSViewController {
     var agoraKit: AgoraRtcEngineKit!
     var couldTest = true
     
-    private var recordingDeviceId: String?
-    private var recordingDevices = [AgoraRtcDeviceInfo]()
-    private var playoutDeviceId: String?
-    private var playoutDevices = [AgoraRtcDeviceInfo]()
-    private var captureDeviceId: String?
-    private var captureDevices = [AgoraRtcDeviceInfo]()
+    fileprivate var recordingDeviceId: String?
+    fileprivate var recordingDevices = [AgoraRtcDeviceInfo]()
+    fileprivate var playoutDeviceId: String?
+    fileprivate var playoutDevices = [AgoraRtcDeviceInfo]()
+    fileprivate var captureDeviceId: String?
+    fileprivate var captureDevices = [AgoraRtcDeviceInfo]()
     
-    private var isInputTesting = false {
+    fileprivate var isInputTesting = false {
         didSet {
             configButton(intputDeviceTestButton, isTesting: isInputTesting)
             if isInputTesting {
@@ -44,14 +44,14 @@ class DevicesViewController: NSViewController {
             } else {
                 agoraKit?.stopRecordingDeviceTest()
             }
-            inputDeviceVolLevelIndicator?.hidden = !isInputTesting
+            inputDeviceVolLevelIndicator?.isHidden = !isInputTesting
         }
     }
-    private var isOutputTesting = false {
+    fileprivate var isOutputTesting = false {
         didSet {
             configButton(outputDeviceTestButton, isTesting: isOutputTesting)
             if isOutputTesting {
-                if let path = NSBundle.mainBundle().pathForResource("test", ofType: "wav") {
+                if let path = Bundle.main.path(forResource: "test", ofType: "wav") {
                     agoraKit?.startPlaybackDeviceTest(path)
                 }
             } else {
@@ -59,7 +59,7 @@ class DevicesViewController: NSViewController {
             }
         }
     }
-    private var isCameraputTesting = false {
+    fileprivate var isCameraputTesting = false {
         didSet {
             configButton(cameraTestButton, isTesting: isCameraputTesting)
             if isCameraputTesting {
@@ -71,7 +71,7 @@ class DevicesViewController: NSViewController {
             }
         }
     }
-    private var deviceVolume = 0 {
+    fileprivate var deviceVolume = 0 {
         didSet {
             inputDeviceVolLevelIndicator?.integerValue = deviceVolume
         }
@@ -81,9 +81,9 @@ class DevicesViewController: NSViewController {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        view.layer?.backgroundColor = NSColor.white.cgColor
         cameraPreviewView.wantsLayer = true
-        cameraPreviewView.layer?.backgroundColor = NSColor.blackColor().CGColor
+        cameraPreviewView.layer?.backgroundColor = NSColor.black.cgColor
         
         configButtonStyle()
         loadDevices()
@@ -109,61 +109,61 @@ class DevicesViewController: NSViewController {
         }
     }
     
-    @IBAction func doInputDeviceChanged(sender: NSPopUpButton) {
+    @IBAction func doInputDeviceChanged(_ sender: NSPopUpButton) {
         if isInputTesting {
             isInputTesting = false
         }
         let deviceId = recordingDevices[sender.indexOfSelectedItem].deviceId
-        agoraKit.setDevice(.DeviceType_Audio_Recording, deviceId: deviceId)
+        agoraKit.setDevice(.deviceType_Audio_Recording, deviceId: deviceId)
     }
     
-    @IBAction func doInputDeviceTestClicked(sender: NSButton) {
+    @IBAction func doInputDeviceTestClicked(_ sender: NSButton) {
         isInputTesting = !isInputTesting
     }
     
-    @IBAction func doInputVolSliderChanged(sender: NSSlider) {
+    @IBAction func doInputVolSliderChanged(_ sender: NSSlider) {
         let vol = sender.intValue
-        agoraKit.setDeviceVolume(.DeviceType_Audio_Recording, volume: vol)
+        agoraKit.setDeviceVolume(.deviceType_Audio_Recording, volume: vol)
     }
     
-    @IBAction func doOutputDeviceChanged(sender: NSPopUpButton) {
+    @IBAction func doOutputDeviceChanged(_ sender: NSPopUpButton) {
         if isOutputTesting {
             isOutputTesting = false
         }
         let deviceId = playoutDevices[sender.indexOfSelectedItem].deviceId
-        agoraKit.setDevice(.DeviceType_Audio_Playout, deviceId: deviceId)
+        agoraKit.setDevice(.deviceType_Audio_Playout, deviceId: deviceId)
     }
     
-    @IBAction func doOutputDeviceTestClicked(sender: NSButton) {
+    @IBAction func doOutputDeviceTestClicked(_ sender: NSButton) {
         isOutputTesting = !isOutputTesting
     }
     
-    @IBAction func doOutputVolSliderChanged(sender: NSSlider) {
+    @IBAction func doOutputVolSliderChanged(_ sender: NSSlider) {
         let vol = sender.intValue
-        agoraKit.setDeviceVolume(.DeviceType_Audio_Playout, volume: vol)
+        agoraKit.setDeviceVolume(.deviceType_Audio_Playout, volume: vol)
     }
     
-    @IBAction func doCameraChanged(sender: NSPopUpButton) {
+    @IBAction func doCameraChanged(_ sender: NSPopUpButton) {
         if isCameraputTesting {
             isCameraputTesting = false
         }
         let deviceId = captureDevices[sender.indexOfSelectedItem].deviceId
-        agoraKit.setDevice(.DeviceType_Video_Capture, deviceId: deviceId)
+        agoraKit.setDevice(.deviceType_Video_Capture, deviceId: deviceId)
     }
     
-    @IBAction func doCameraTestClicked(sender: NSButton) {
+    @IBAction func doCameraTestClicked(_ sender: NSButton) {
         isCameraputTesting = !isCameraputTesting
     }
 }
 
 private extension DevicesViewController {
-    func configStyleOfWindow(window: NSWindow) {
-        window.styleMask |= NSFullSizeContentViewWindowMask
+    func configStyleOfWindow(_ window: NSWindow) {
+        window.styleMask.insert(.fullSizeContentView)
         window.titlebarAppearsTransparent = true
-        window.movableByWindowBackground = true
+        window.isMovableByWindowBackground = true
         
-        window.minSize = CGSizeMake(600, 600)
-        window.maxSize = CGSizeMake(600, 600)
+        window.minSize = CGSize(width: 600, height: 600)
+        window.maxSize = CGSize(width: 600, height: 600)
     }
     
     func configButtonStyle() {
@@ -171,12 +171,12 @@ private extension DevicesViewController {
         configButton(outputDeviceTestButton, isTesting: false)
         configButton(cameraTestButton, isTesting: false)
         
-        intputDeviceTestButton.hidden = !couldTest
-        outputDeviceTestButton.hidden = !couldTest
-        cameraTestButton.hidden = !couldTest
+        intputDeviceTestButton.isHidden = !couldTest
+        outputDeviceTestButton.isHidden = !couldTest
+        cameraTestButton.isHidden = !couldTest
     }
     
-    func configButton(button: NSButton, isTesting: Bool) {
+    func configButton(_ button: NSButton, isTesting: Bool) {
         button.title = isTesting ? "Stop Test" : "Test"
     }
 }
@@ -184,41 +184,41 @@ private extension DevicesViewController {
 //MARK: - device list
 private extension DevicesViewController {
     func loadDevices() {
-        loadDevice(.DeviceType_Audio_Playout)
-        loadDevice(.DeviceType_Audio_Recording)
-        loadDevice(.DeviceType_Video_Capture)
+        loadDevice(.deviceType_Audio_Playout)
+        loadDevice(.deviceType_Audio_Recording)
+        loadDevice(.deviceType_Video_Capture)
         
-        NSNotificationCenter.defaultCenter().addObserverForName(DeviceListChangeNotificationKey, object: nil, queue: nil) { [weak self] (notify) in
-            if let obj = notify.object as? NSNumber, let type = AgoraRtcDeviceType(rawValue: obj.integerValue) {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: DeviceListChangeNotificationKey), object: nil, queue: nil) { [weak self] (notify) in
+            if let obj = notify.object as? NSNumber, let type = AgoraRtcDeviceType(rawValue: obj.intValue) {
                 self?.loadDevice(type)
             }
         }
         
         if couldTest {
-            NSNotificationCenter.defaultCenter().addObserverForName(VolumeChangeNotificationKey, object: nil, queue: nil, usingBlock: { [weak self] (notify) in
+            NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: VolumeChangeNotificationKey), object: nil, queue: nil, using: { [weak self] (notify) in
                 if let obj = notify.object as? NSNumber {
-                    self?.deviceVolume = obj.integerValue
+                    self?.deviceVolume = obj.intValue
                 }
             })
         }
     }
     
-    func loadDevice(type: AgoraRtcDeviceType) {
+    func loadDevice(_ type: AgoraRtcDeviceType) {
         guard let devices = agoraKit.enumerateDevices(type) as NSArray as? [AgoraRtcDeviceInfo] else {
             return
         }
         
         let deviceId = agoraKit.getDeviceId(type)
         switch type {
-        case .DeviceType_Audio_Recording:
+        case .deviceType_Audio_Recording:
             recordingDevices = devices
             recordingDeviceId = deviceId
             updatePopUpButton(inputDevicePopUpButton, withValue: deviceId, inValueList: devices)
-        case .DeviceType_Audio_Playout:
+        case .deviceType_Audio_Playout:
             playoutDevices = devices
             playoutDeviceId = deviceId
             updatePopUpButton(outputDevicePopUpButton, withValue: deviceId, inValueList: devices)
-        case .DeviceType_Video_Capture:
+        case .deviceType_Video_Capture:
             captureDevices = devices
             captureDeviceId = deviceId
             updatePopUpButton(cameraPopUpButton, withValue: deviceId, inValueList: devices)
@@ -229,26 +229,26 @@ private extension DevicesViewController {
         updateVolumeOfDevice(type)
     }
     
-    func updatePopUpButton(button: NSPopUpButton, withValue value: String?, inValueList list: [AgoraRtcDeviceInfo]) {
+    func updatePopUpButton(_ button: NSPopUpButton, withValue value: String?, inValueList list: [AgoraRtcDeviceInfo]) {
         button.removeAllItems()
-        button.addItemsWithTitles(list.map({ (info) -> String in
+        button.addItems(withTitles: list.map({ (info) -> String in
             return info.deviceName
         }))
         
         let deviceIds = list.map { (info) -> String in
             return info.deviceId
         }
-        if let value = value, let index = deviceIds.indexOf(value) {
-            button.selectItemAtIndex(index)
+        if let value = value, let index = deviceIds.index(of: value) {
+            button.selectItem(at: index)
         }
     }
     
-    func updateVolumeOfDevice(type: AgoraRtcDeviceType) {
+    func updateVolumeOfDevice(_ type: AgoraRtcDeviceType) {
         switch type {
-        case .DeviceType_Audio_Recording:
+        case .deviceType_Audio_Recording:
             let vol = agoraKit.getDeviceVolume(type)
             inputDeviceVolSlider.intValue = vol
-        case .DeviceType_Audio_Playout:
+        case .deviceType_Audio_Playout:
             let vol = agoraKit.getDeviceVolume(type)
             outputDeviceVolSlider.intValue = vol
         default:

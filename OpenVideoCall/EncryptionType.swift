@@ -14,15 +14,15 @@ enum EncryptionType {
     
     func modeString() -> String {
         switch self {
-        case xts128: return "aes-128-xts"
-        case xts256: return "aes-256-xts"
+        case .xts128: return "aes-128-xts"
+        case .xts256: return "aes-256-xts"
         }
     }
     
     func description() -> String {
         switch self {
-        case xts128: return "AES 128"
-        case xts256: return "AES 256"
+        case .xts128: return "AES 128"
+        case .xts256: return "AES 256"
         }
     }
 }

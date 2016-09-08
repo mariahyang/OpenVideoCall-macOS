@@ -34,11 +34,11 @@ class VideoSession: NSObject {
     init(uid: UInt) {
         self.uid = uid
         
-        hostingView = VideoView(frame: CGRectMake(0, 0, 100, 100))
+        hostingView = VideoView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         canvas = AgoraRtcVideoCanvas()
         canvas.uid = uid
         canvas.view = hostingView.videoView
-        canvas.renderMode = .Render_Fit
+        canvas.renderMode = .render_Fit
     }
 }
 
@@ -47,7 +47,7 @@ extension VideoSession {
         return VideoSession(uid: 0)
     }
     
-    func updateMediaInfo(resolution resolution: CGSize? = nil, bitRate: Int? = nil, fps: Int? = nil) {
+    func updateMediaInfo(_ resolution: CGSize? = nil, bitRate: Int? = nil, fps: Int? = nil) {
         if let resolution = resolution {
             mediaInfo.resolution = resolution
         }

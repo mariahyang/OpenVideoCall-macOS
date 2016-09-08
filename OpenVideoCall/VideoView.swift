@@ -10,18 +10,18 @@ import Cocoa
 
 class VideoView: NSView {
     
-    private(set) var videoView: NSView!
-    private var screenShareImageView: NSView?
+    fileprivate(set) var videoView: NSView!
+    fileprivate var screenShareImageView: NSView?
     
-    private var infoView: NSView!
-    private var infoLabel: NSTextField!
+    fileprivate var infoView: NSView!
+    fileprivate var infoLabel: NSTextField!
     
     var isVideoMuted = false {
         didSet {
-            videoView?.hidden = isVideoMuted || isScreenSharing
+            videoView?.isHidden = isVideoMuted || isScreenSharing
         }
     }
-    private var isScreenSharing = false {
+    fileprivate var isScreenSharing = false {
         didSet {
             removeScreenShareImageView()
             
@@ -29,12 +29,12 @@ class VideoView: NSView {
                 addScreenShareImageView()
             }
             
-            videoView.hidden = isVideoMuted || isScreenSharing
+            videoView.isHidden = isVideoMuted || isScreenSharing
         }
     }
     var shouldShowInfos = false {
         didSet {
-            infoView.hidden = !shouldShowInfos
+            infoView.isHidden = !shouldShowInfos
         }
     }
     
@@ -42,7 +42,7 @@ class VideoView: NSView {
         super.init(frame: frameRect)
         translatesAutoresizingMaskIntoConstraints = false
         wantsLayer = true
-        layer?.backgroundColor = NSColor.whiteColor().CGColor
+        layer?.backgroundColor = NSColor.white.cgColor
         
         addVideoView()
         addInfoView()
@@ -54,13 +54,13 @@ class VideoView: NSView {
 }
 
 extension VideoView {
-    func switchToScreenShare(isScreenShare: Bool) {
+    func switchToScreenShare(_ isScreenShare: Bool) {
         isScreenSharing = isScreenShare
     }
 }
 
 extension VideoView {
-    func updateInfo(info: MediaInfo) {
+    func updateInfo(_ info: MediaInfo) {
         infoLabel?.stringValue = info.description()
     }
 }
@@ -73,21 +73,21 @@ private extension VideoView {
         addSubview(videoView)
         
         let inset = VideoViewLayout.ViewEdgeInset
-        let videoViewH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-(\(inset))-[video]-(\(inset))-|", options: [], metrics: nil, views: ["video": videoView])
-        let videoViewV = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(\(inset))-[video]-(\(inset))-|", options: [], metrics: nil, views: ["video": videoView])
-        NSLayoutConstraint.activateConstraints(videoViewH + videoViewV)
+        let videoViewH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(inset))-[video]-(\(inset))-|", options: [], metrics: nil, views: ["video": videoView])
+        let videoViewV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(\(inset))-[video]-(\(inset))-|", options: [], metrics: nil, views: ["video": videoView])
+        NSLayoutConstraint.activate(videoViewH + videoViewV)
     }
     
     func addInfoView() {
         infoView = NSView()
         infoView.translatesAutoresizingMaskIntoConstraints = false
-        infoView.hidden = true
+        infoView.isHidden = true
         
         addSubview(infoView)
-        let infoViewH = NSLayoutConstraint.constraintsWithVisualFormat("H:|[info]|", options: [], metrics: nil, views: ["info": infoView])
-        let infoViewV = NSLayoutConstraint.constraintsWithVisualFormat("V:|[info(==135)]", options: [], metrics: nil, views: ["info": infoView])
+        let infoViewH = NSLayoutConstraint.constraints(withVisualFormat: "H:|[info]|", options: [], metrics: nil, views: ["info": infoView])
+        let infoViewV = NSLayoutConstraint.constraints(withVisualFormat: "V:|[info(==135)]", options: [], metrics: nil, views: ["info": infoView])
         infoView.lowerContentCompressionResistancePriority()
-        NSLayoutConstraint.activateConstraints(infoViewH + infoViewV)
+        NSLayoutConstraint.activate(infoViewH + infoViewV)
         
         func createInfoLabel() -> NSTextField {
             let label = NSTextField()
@@ -96,16 +96,16 @@ private extension VideoView {
             label.stringValue = " "
             let shadow = NSShadow()
             shadow.shadowOffset = NSSize(width: 0, height: 1)
-            shadow.shadowColor = NSColor.blackColor()
+            shadow.shadowColor = NSColor.black
             label.shadow = shadow
             label.maximumNumberOfLines = 0
             
-            label.editable = false
-            label.bezeled = false
+            label.isEditable = false
+            label.isBezeled = false
             label.drawsBackground = false
             
-            label.font = NSFont.systemFontOfSize(12)
-            label.textColor = NSColor.whiteColor()
+            label.font = NSFont.systemFont(ofSize: 12)
+            label.textColor = NSColor.white
             
             return label
         }
@@ -116,32 +116,32 @@ private extension VideoView {
         let top: CGFloat = 16
         let left: CGFloat = 8
         
-        let labelV = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(\(top))-[info]", options: [], metrics: nil, views: ["info": infoLabel])
-        let labelH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-(\(left))-[info]", options: [], metrics: nil, views: ["info": infoLabel])
+        let labelV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(\(top))-[info]", options: [], metrics: nil, views: ["info": infoLabel])
+        let labelH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(left))-[info]", options: [], metrics: nil, views: ["info": infoLabel])
         infoLabel.lowerContentCompressionResistancePriority()
-        NSLayoutConstraint.activateConstraints(labelV)
-        NSLayoutConstraint.activateConstraints(labelH)
+        NSLayoutConstraint.activate(labelV)
+        NSLayoutConstraint.activate(labelH)
     }
     
     //MARK: - screen share
-    private func addScreenShareImageView() {
-        let imageView = NSImageView(frame: CGRectMake(0, 0, 144, 144))
+    func addScreenShareImageView() {
+        let imageView = NSImageView(frame: CGRect(x: 0, y: 0, width: 144, height: 144))
         imageView.image = NSImage(named: "icon_sharing_desktop")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
         
-        let avatarH = NSLayoutConstraint(item: imageView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0)
-        let avatarV = NSLayoutConstraint(item: imageView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0)
-        let avatarRatio = NSLayoutConstraint(item: imageView, attribute: .Width, relatedBy: .Equal, toItem: imageView, attribute: .Height, multiplier: 1, constant: 0)
-        let avatarLeft = NSLayoutConstraint(item: imageView, attribute: .Left, relatedBy: .GreaterThanOrEqual, toItem: self, attribute: .Left, multiplier: 1, constant: 10)
-        let avatarTop = NSLayoutConstraint(item: imageView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: self, attribute: .Top, multiplier: 1, constant: 10)
+        let avatarH = NSLayoutConstraint(item: imageView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
+        let avatarV = NSLayoutConstraint(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
+        let avatarRatio = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1, constant: 0)
+        let avatarLeft = NSLayoutConstraint(item: imageView, attribute: .left, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .left, multiplier: 1, constant: 10)
+        let avatarTop = NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .top, multiplier: 1, constant: 10)
         imageView.lowerContentCompressionResistancePriority()
-        NSLayoutConstraint.activateConstraints([avatarH, avatarV, avatarRatio, avatarLeft, avatarTop])
+        NSLayoutConstraint.activate([avatarH, avatarV, avatarRatio, avatarLeft, avatarTop])
         
         screenShareImageView = imageView
     }
     
-    private func removeScreenShareImageView() {
+    func removeScreenShareImageView() {
         if let imageView = screenShareImageView {
             imageView.removeFromSuperview()
             self.screenShareImageView = nil
@@ -151,7 +151,7 @@ private extension VideoView {
 
 private extension NSView {
     func lowerContentCompressionResistancePriority() {
-        setContentCompressionResistancePriority(200, forOrientation: .Horizontal)
-        setContentCompressionResistancePriority(200, forOrientation: .Vertical)
+        setContentCompressionResistancePriority(200, for: .horizontal)
+        setContentCompressionResistancePriority(200, for: .vertical)
     }
 }

@@ -9,7 +9,7 @@
 import Cocoa
 
 class SessionMediaInfoCenter {
-    class func updateInfoViewOfSessions(sessions: [VideoSession], fullSession: VideoSession?, isShowingWhiteboard: Bool) {
+    class func updateInfoViewOfSessions(_ sessions: [VideoSession], fullSession: VideoSession?, isShowingWhiteboard: Bool) {
         guard sessions.count > 0 else {
             return
         }

@@ -18,14 +18,14 @@ class MainViewController: NSViewController {
     @IBOutlet weak var settingsButton: NSButton!
     
     var videoProfile = AgoraRtcVideoProfile.defaultProfile()
-    private var agoraKit: AgoraRtcEngineKit!
-    private var encryptionType = EncryptionType.xts128
+    fileprivate var agoraKit: AgoraRtcEngineKit!
+    fileprivate var encryptionType = EncryptionType.xts128
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        view.layer?.backgroundColor = NSColor.white.cgColor
         
         loadAgoraKit()
         loadEncryptionItems()
@@ -36,8 +36,8 @@ class MainViewController: NSViewController {
         roomInputTextField.becomeFirstResponder()
     }
     
-    override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
-        guard let segueId = segue.identifier where !segueId.isEmpty else {
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        guard let segueId = segue.identifier , !segueId.isEmpty else {
             return
         }
         
@@ -62,69 +62,69 @@ class MainViewController: NSViewController {
     }
     
     //MARK: - user actions
-    @IBAction func doEncryptionChanged(sender: NSPopUpButton) {
+    @IBAction func doEncryptionChanged(_ sender: NSPopUpButton) {
         encryptionType = EncryptionType.allValue[sender.indexOfSelectedItem]
     }
     
-    @IBAction func doTestClicked(sender: NSButton) {
-        performSegueWithIdentifier("roomVCToDevicesVC", sender: nil)
+    @IBAction func doTestClicked(_ sender: NSButton) {
+        performSegue(withIdentifier: "roomVCToDevicesVC", sender: nil)
     }
     
-    @IBAction func doJoinClicked(sender: NSButton) {
+    @IBAction func doJoinClicked(_ sender: NSButton) {
         enterRoomWithName(roomInputTextField.stringValue)
     }
     
-    @IBAction func doSettingsClicked(sender: NSButton) {
-        performSegueWithIdentifier("roomVCToSettingsVC", sender: nil)
+    @IBAction func doSettingsClicked(_ sender: NSButton) {
+        performSegue(withIdentifier: "roomVCToSettingsVC", sender: nil)
     }
 }
 
 private extension MainViewController {
     func loadAgoraKit() {
-        agoraKit = AgoraRtcEngineKit.sharedEngineWithAppId(KeyCenter.AppId, delegate: self)
+        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
         agoraKit.enableVideo()
     }
     
     func loadEncryptionItems() {
-        encryptionPopUpButton.addItemsWithTitles(EncryptionType.allValue.map { type -> String in
+        encryptionPopUpButton.addItems(withTitles: EncryptionType.allValue.map { type -> String in
             return type.description()
         })
-        encryptionPopUpButton.selectItemWithTitle(encryptionType.description())
+        encryptionPopUpButton.selectItem(withTitle: encryptionType.description())
     }
     
-    func enterRoomWithName(roomName: String?) {
-        guard let roomName = roomName where !roomName.isEmpty else {
+    func enterRoomWithName(_ roomName: String?) {
+        guard let roomName = roomName , !roomName.isEmpty else {
             return
         }
         
-        performSegueWithIdentifier("roomNameVCToVideoVC", sender: roomName)
+        performSegue(withIdentifier: "roomNameVCToVideoVC", sender: roomName)
     }
 }
 
 extension MainViewController: SettingsVCDelegate {
-    func settingsVC(settingsVC: SettingsViewController, closeWithProfile profile: AgoraRtcVideoProfile) {
+    func settingsVC(_ settingsVC: SettingsViewController, closeWithProfile profile: AgoraRtcVideoProfile) {
         videoProfile = profile
         settingsVC.view.window?.contentViewController = self
     }
 }
 
 extension MainViewController: RoomVCDelegate {
-    func roomVCNeedClose(roomVC: RoomViewController) {
+    func roomVCNeedClose(_ roomVC: RoomViewController) {
         guard let window = roomVC.view.window else {
             return
         }
         
-        if window.styleMask & NSFullScreenWindowMask == NSFullScreenWindowMask {
+        if window.styleMask.contains(.fullScreen) {
             window.toggleFullScreen(nil)
         }
         
-        window.styleMask |= NSFullSizeContentViewWindowMask | NSMiniaturizableWindowMask
+        window.styleMask.insert([.fullSizeContentView, .miniaturizable])
         window.delegate = nil
-        window.collectionBehavior = .Default
+        window.collectionBehavior = NSWindowCollectionBehavior()
 
         window.contentViewController = self
         
-        let size = CGSizeMake(720, 600)
+        let size = CGSize(width: 720, height: 600)
         window.minSize = size
         window.setContentSize(size)
         window.maxSize = size
@@ -132,18 +132,18 @@ extension MainViewController: RoomVCDelegate {
 }
 
 extension MainViewController: AgoraRtcEngineDelegate {
-    func rtcEngine(engine: AgoraRtcEngineKit!, reportAudioVolumeIndicationOfSpeakers speakers: [AnyObject]!, totalVolume: Int) {
-        NSNotificationCenter.defaultCenter().postNotificationName(VolumeChangeNotificationKey, object: NSNumber(integer: totalVolume))
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, reportAudioVolumeIndicationOfSpeakers speakers: [AnyObject]!, totalVolume: Int) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: VolumeChangeNotificationKey), object: NSNumber(value: totalVolume as Int))
     }
     
-    func rtcEngine(engine: AgoraRtcEngineKit!, device deviceId: String!, type deviceType: AgoraRtcDeviceType, stateChanged state: Int) {
-        NSNotificationCenter.defaultCenter().postNotificationName(DeviceListChangeNotificationKey, object: NSNumber(integer: deviceType.rawValue))
+    func rtcEngine(_ engine: AgoraRtcEngineKit!, device deviceId: String!, type deviceType: AgoraRtcDeviceType, stateChanged state: Int) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: DeviceListChangeNotificationKey), object: NSNumber(value: deviceType.rawValue))
     }
 }
 
 //MARK: - text field
 extension MainViewController: NSControlTextEditingDelegate {
-    override func controlTextDidChange(obj: NSNotification) {
+    override func controlTextDidChange(_ obj: Notification) {
         guard let field = obj.object as? NSTextField else {
             return
         }

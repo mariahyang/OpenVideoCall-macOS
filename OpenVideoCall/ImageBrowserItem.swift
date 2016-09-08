@@ -12,7 +12,7 @@ import Quartz.ImageKit
 class ImageBrowserItem: NSObject {
     var window: Window!
     
-    private override init() {
+    fileprivate override init() {
         super.init()
     }
     
@@ -29,7 +29,7 @@ class ImageBrowserItem: NSObject {
         return window.name
     }
     
-    override func imageRepresentation() -> AnyObject! {
+    override func imageRepresentation() -> Any! {
         return window.image
     }
     

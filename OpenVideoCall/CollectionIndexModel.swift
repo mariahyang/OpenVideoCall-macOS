@@ -14,7 +14,7 @@ struct CollectionIndexModel {
     //3 4 5  12 13 14
     //6 7 8  15 ...
     
-    static func rowsPerScreenWithTotalCount(totalCount: Int) -> Int {
+    static func rowsPerScreenWithTotalCount(_ totalCount: Int) -> Int {
         if totalCount <= 0 {
             return 0
         } else if totalCount == 1 {
@@ -26,7 +26,7 @@ struct CollectionIndexModel {
     }
     
     //顶部相邻对象
-    static func topIndexOfIndex(index: Int, rowsPerScreen: Int) -> Int? {
+    static func topIndexOfIndex(_ index: Int, rowsPerScreen: Int) -> Int? {
         let mode = index % (rowsPerScreen * rowsPerScreen)
         if mode >= rowsPerScreen {
             return index - rowsPerScreen
@@ -36,7 +36,7 @@ struct CollectionIndexModel {
     }
     
     //左侧相邻对象
-    static func leftIndexOfIndex(index: Int, rowsPerScreen: Int) -> Int? {
+    static func leftIndexOfIndex(_ index: Int, rowsPerScreen: Int) -> Int? {
         let mode = index % (rowsPerScreen * rowsPerScreen)
         
         let result: Int

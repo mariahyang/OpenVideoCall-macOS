@@ -9,19 +9,19 @@
 import Foundation
 
 enum MessageType {
-    case Chat, Alert
+    case chat, alert
     
     func color() -> NSColor {
         switch self {
-        case .Chat: return NSColor(hex: 0x444444, alpha: 0.6)
-        case .Alert: return NSColor(hex: 0xff3c32, alpha: 0.6)
+        case .chat: return NSColor(hex: 0x444444, alpha: 0.6)
+        case .alert: return NSColor(hex: 0xff3c32, alpha: 0.6)
         }
     }
 }
 
 struct Message {
     var text: String!
-    var type: MessageType = .Chat
+    var type: MessageType = .chat
     
     init(text: String, type: MessageType) {
         self.text = text

@@ -10,7 +10,7 @@ import Cocoa
 
 extension NSColor {
     convenience init(hex: Int, alpha: CGFloat = 1) {
-        func transform(input: Int, offset: Int = 0) -> CGFloat {
+        func transform(_ input: Int, offset: Int = 0) -> CGFloat {
             let value = (input >> offset) & 0xff
             return CGFloat(value) / 255
         }
@@ -28,7 +28,7 @@ extension NSColor {
 }
 
 extension CGSize {
-    func fixedSizeWithReference(reference: CGSize) -> CGSize {
+    func fixedSizeWithReference(_ reference: CGSize) -> CGSize {
         if reference.width > reference.height {
             return fixedLandscapeSize()
         } else {
@@ -40,7 +40,7 @@ extension CGSize {
         let width = self.width
         let height = self.height
         if width < height {
-            return CGSizeMake(height, width)
+            return CGSize(width: height, height: width)
         } else {
             return self
         }
@@ -50,7 +50,7 @@ extension CGSize {
         let width = self.width
         let height = self.height
         if width > height {
-            return CGSizeMake(height, width)
+            return CGSize(width: height, height: width)
         } else {
             return self
         }
@@ -60,7 +60,7 @@ extension CGSize {
         let width = self.width
         let height = self.height
         if width < height {
-            return CGSizeMake(height, width)
+            return CGSize(width: height, height: width)
         } else {
             return self
         }
