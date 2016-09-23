@@ -15,19 +15,12 @@ class VideoSession: NSObject {
     var size: CGSize?
     var mediaInfo = MediaInfo() {
         didSet {
-            hostingView?.updateInfo(mediaInfo)
+            hostingView?.update(with: mediaInfo)
         }
     }
     var isVideoMuted = false {
         didSet {
             hostingView.isVideoMuted = isVideoMuted
-        }
-    }
-    
-    var shouldShowInfos = false {
-        didSet {
-            hostingView.shouldShowInfos = shouldShowInfos
-            hostingView.updateInfo(mediaInfo)
         }
     }
     
@@ -47,7 +40,7 @@ extension VideoSession {
         return VideoSession(uid: 0)
     }
     
-    func updateMediaInfo(_ resolution: CGSize? = nil, bitRate: Int? = nil, fps: Int? = nil) {
+    func updateMediaInfo(resolution: CGSize? = nil, bitRate: Int? = nil, fps: Int? = nil) {
         if let resolution = resolution {
             mediaInfo.resolution = resolution
         }
@@ -60,8 +53,6 @@ extension VideoSession {
             mediaInfo.fps = fps
         }
         
-        if shouldShowInfos {
-            hostingView.updateInfo(mediaInfo)
-        }
+        hostingView.update(with: mediaInfo)
     }
 }

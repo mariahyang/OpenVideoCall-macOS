@@ -71,7 +71,7 @@ class MainViewController: NSViewController {
     }
     
     @IBAction func doJoinClicked(_ sender: NSButton) {
-        enterRoomWithName(roomInputTextField.stringValue)
+        enter(roomName: roomInputTextField.stringValue)
     }
     
     @IBAction func doSettingsClicked(_ sender: NSButton) {
@@ -92,7 +92,7 @@ private extension MainViewController {
         encryptionPopUpButton.selectItem(withTitle: encryptionType.description())
     }
     
-    func enterRoomWithName(_ roomName: String?) {
+    func enter(roomName: String?) {
         guard let roomName = roomName , !roomName.isEmpty else {
             return
         }
@@ -148,7 +148,7 @@ extension MainViewController: NSControlTextEditingDelegate {
             return
         }
         
-        let legalString = MediaCharacter.updateToLegalMediaString(field.stringValue)
+        let legalString = MediaCharacter.updateToLegalMediaString(from: field.stringValue)
         field.stringValue = legalString
     }
 }

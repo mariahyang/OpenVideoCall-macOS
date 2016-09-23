@@ -14,7 +14,7 @@ struct MediaCharacter {
         return CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&()+,-:;<=.>?@[]^_`{|}~")
     }()
     
-    static func updateToLegalMediaString(_ string: String) -> String {
+    static func updateToLegalMediaString(from string: String) -> String {
         let legalSet = MediaCharacter.legalMediaCharacterSet
         let separatedArray = string.components(separatedBy: legalSet.inverted)
         let legalString = separatedArray.joined(separator: "")

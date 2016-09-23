@@ -32,11 +32,6 @@ class VideoView: NSView {
             videoView.isHidden = isVideoMuted || isScreenSharing
         }
     }
-    var shouldShowInfos = false {
-        didSet {
-            infoView.isHidden = !shouldShowInfos
-        }
-    }
     
     override init(frame frameRect: CGRect) {
         super.init(frame: frameRect)
@@ -60,7 +55,7 @@ extension VideoView {
 }
 
 extension VideoView {
-    func updateInfo(_ info: MediaInfo) {
+    func update(with info: MediaInfo) {
         infoLabel?.stringValue = info.description()
     }
 }
@@ -81,7 +76,6 @@ private extension VideoView {
     func addInfoView() {
         infoView = NSView()
         infoView.translatesAutoresizingMaskIntoConstraints = false
-        infoView.isHidden = true
         
         addSubview(infoView)
         let infoViewH = NSLayoutConstraint.constraints(withVisualFormat: "H:|[info]|", options: [], metrics: nil, views: ["info": infoView])

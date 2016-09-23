@@ -38,7 +38,7 @@ class DevicesViewController: NSViewController {
     
     fileprivate var isInputTesting = false {
         didSet {
-            configButton(intputDeviceTestButton, isTesting: isInputTesting)
+            config(button: intputDeviceTestButton, isTesting: isInputTesting)
             if isInputTesting {
                 agoraKit?.startRecordingDeviceTest(200)
             } else {
@@ -49,7 +49,7 @@ class DevicesViewController: NSViewController {
     }
     fileprivate var isOutputTesting = false {
         didSet {
-            configButton(outputDeviceTestButton, isTesting: isOutputTesting)
+            config(button: outputDeviceTestButton, isTesting: isOutputTesting)
             if isOutputTesting {
                 if let path = Bundle.main.path(forResource: "test", ofType: "wav") {
                     agoraKit?.startPlaybackDeviceTest(path)
@@ -61,7 +61,7 @@ class DevicesViewController: NSViewController {
     }
     fileprivate var isCameraputTesting = false {
         didSet {
-            configButton(cameraTestButton, isTesting: isCameraputTesting)
+            config(button: cameraTestButton, isTesting: isCameraputTesting)
             if isCameraputTesting {
                 if let view = cameraPreviewView {
                     agoraKit?.startCaptureDeviceTest(view)
@@ -91,7 +91,7 @@ class DevicesViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        configStyleOfWindow(view.window!)
+        configStyle(of: view.window!)
     }
     
     override func viewWillDisappear() {
@@ -157,7 +157,7 @@ class DevicesViewController: NSViewController {
 }
 
 private extension DevicesViewController {
-    func configStyleOfWindow(_ window: NSWindow) {
+    func configStyle(of window: NSWindow) {
         window.styleMask.insert(.fullSizeContentView)
         window.titlebarAppearsTransparent = true
         window.isMovableByWindowBackground = true
@@ -167,16 +167,16 @@ private extension DevicesViewController {
     }
     
     func configButtonStyle() {
-        configButton(intputDeviceTestButton, isTesting: false)
-        configButton(outputDeviceTestButton, isTesting: false)
-        configButton(cameraTestButton, isTesting: false)
+        config(button: intputDeviceTestButton, isTesting: false)
+        config(button: outputDeviceTestButton, isTesting: false)
+        config(button: cameraTestButton, isTesting: false)
         
         intputDeviceTestButton.isHidden = !couldTest
         outputDeviceTestButton.isHidden = !couldTest
         cameraTestButton.isHidden = !couldTest
     }
     
-    func configButton(_ button: NSButton, isTesting: Bool) {
+    func config(button: NSButton, isTesting: Bool) {
         button.title = isTesting ? "Stop Test" : "Test"
     }
 }
@@ -184,13 +184,13 @@ private extension DevicesViewController {
 //MARK: - device list
 private extension DevicesViewController {
     func loadDevices() {
-        loadDevice(.deviceType_Audio_Playout)
-        loadDevice(.deviceType_Audio_Recording)
-        loadDevice(.deviceType_Video_Capture)
+        loadDevice(of: .deviceType_Audio_Playout)
+        loadDevice(of: .deviceType_Audio_Recording)
+        loadDevice(of: .deviceType_Video_Capture)
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: DeviceListChangeNotificationKey), object: nil, queue: nil) { [weak self] (notify) in
             if let obj = notify.object as? NSNumber, let type = AgoraRtcDeviceType(rawValue: obj.intValue) {
-                self?.loadDevice(type)
+                self?.loadDevice(of: type)
             }
         }
         
@@ -203,7 +203,7 @@ private extension DevicesViewController {
         }
     }
     
-    func loadDevice(_ type: AgoraRtcDeviceType) {
+    func loadDevice(of type: AgoraRtcDeviceType) {
         guard let devices = agoraKit.enumerateDevices(type) as NSArray as? [AgoraRtcDeviceInfo] else {
             return
         }
@@ -226,7 +226,7 @@ private extension DevicesViewController {
             break
         }
         
-        updateVolumeOfDevice(type)
+        updateVolume(of: type)
     }
     
     func updatePopUpButton(_ button: NSPopUpButton, withValue value: String?, inValueList list: [AgoraRtcDeviceInfo]) {
@@ -243,7 +243,7 @@ private extension DevicesViewController {
         }
     }
     
-    func updateVolumeOfDevice(_ type: AgoraRtcDeviceType) {
+    func updateVolume(of type: AgoraRtcDeviceType) {
         switch type {
         case .deviceType_Audio_Recording:
             let vol = agoraKit.getDeviceVolume(type)

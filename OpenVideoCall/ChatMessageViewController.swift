@@ -14,19 +14,19 @@ class ChatMessageViewController: NSViewController {
     
     fileprivate var messageList = [Message]()
     
-    func appendChat(_ text: String, fromUid uid: Int64) {
+    func append(chat text: String, fromUid uid: Int64) {
         let message = Message(text: text, type: .chat)
-        appendMessage(message)
+        append(message: message)
     }
     
-    func appendAlert(_ text: String) {
+    func append(alert text: String) {
         let message = Message(text: text, type: .alert)
-        appendMessage(message)
+        append(message: message)
     }
 }
 
 private extension ChatMessageViewController {
-    func appendMessage(_ message: Message) {
+    func append(message: Message) {
         messageList.append(message)
         
         var deleted: Message?
@@ -34,10 +34,10 @@ private extension ChatMessageViewController {
             deleted = messageList.removeFirst()
         }
         
-        updateMessageTableWithDeletedMesage(deleted)
+        updateMessageTable(withDeleted: deleted)
     }
     
-    func updateMessageTableWithDeletedMesage(_ deleted: Message?) {
+    func updateMessageTable(withDeleted deleted: Message?) {
         guard let tableView = messageTableView else {
             return
         }
@@ -62,7 +62,7 @@ extension ChatMessageViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let cell = tableView.make(withIdentifier: "messageCell", owner: self) as! ChatMessageCellView
         let message = messageList[row]
-        cell.setMessage(message)
+        cell.set(with: message)
         return cell
     }
     

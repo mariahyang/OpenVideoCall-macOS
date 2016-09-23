@@ -73,14 +73,14 @@ class RoomViewController: NSViewController {
     var agoraKit: AgoraRtcEngineKit!
     fileprivate var videoSessions = [VideoSession]() {
         didSet {
-            updateInterfaceWithSessions(videoSessions)
+            updateInterface(with: videoSessions)
         }
     }
     fileprivate var doubleClickEnabled = false
     fileprivate var doubleClickFullSession: VideoSession? {
         didSet {
             if videoSessions.count >= 3 && doubleClickFullSession != oldValue {
-                updateInterfaceWithSessions(videoSessions)
+                updateInterface(with: videoSessions)
             }
         }
     }
@@ -176,7 +176,7 @@ class RoomViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        configStyleOfWindow(view.window!)
+        configStyle(of: view.window!)
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -224,7 +224,7 @@ class RoomViewController: NSViewController {
     @IBAction func doMessageInput(_ sender: NSTextField) {
         let text = sender.stringValue
         if !text.isEmpty {
-            sendText(text)
+            send(text: text)
             sender.stringValue = ""
         }
     }
@@ -238,7 +238,7 @@ class RoomViewController: NSViewController {
             shouldHideFlowViews = !shouldHideFlowViews
         } else if theEvent.clickCount == 2 && doubleClickEnabled {
             if doubleClickFullSession == nil {
-                if let clickedIndex = videoViewLayout.reponseViewIndexOfLocation(theEvent.locationInWindow) {
+                if let clickedIndex = videoViewLayout.reponseViewIndex(of: theEvent.locationInWindow) {
                     doubleClickFullSession = videoSessions[clickedIndex]
                 }
             } else {
@@ -250,7 +250,7 @@ class RoomViewController: NSViewController {
 
 //MARK: - private
 private extension RoomViewController {
-    func configStyleOfWindow(_ window: NSWindow) {
+    func configStyle(of window: NSWindow) {
         window.styleMask.insert([.fullSizeContentView, .miniaturizable])
         window.delegate = self
         window.collectionBehavior = [.fullScreenPrimary]
@@ -259,7 +259,7 @@ private extension RoomViewController {
         window.maxSize = CGSize(width: CGFloat(FLT_MAX), height: CGFloat(FLT_MAX))
     }
     
-    func updateInterfaceWithSessions(_ sessions: [VideoSession]) {
+    func updateInterface(with sessions: [VideoSession]) {
         guard !sessions.isEmpty else {
             return
         }
@@ -286,11 +286,9 @@ private extension RoomViewController {
             doubleClickEnabled = false
             doubleClickFullSession = nil
         }
-        
-        SessionMediaInfoCenter.updateInfoViewOfSessions(sessions, fullSession: doubleClickFullSession, isShowingWhiteboard: false)
     }
     
-    func fetchSessionOfUid(_ uid: UInt) -> VideoSession? {
+    func fetchSession(of uid: UInt) -> VideoSession? {
         for session in videoSessions {
             if session.uid == uid {
                 return session
@@ -300,8 +298,8 @@ private extension RoomViewController {
         return nil
     }
     
-    func videoSessionOfUid(_ uid: UInt) -> VideoSession {
-        if let fetchedSession = fetchSessionOfUid(uid) {
+    func videoSession(of uid: UInt) -> VideoSession {
+        if let fetchedSession = fetchSession(of: uid) {
             return fetchedSession
         } else {
             let newSession = VideoSession(uid: uid)
@@ -311,7 +309,7 @@ private extension RoomViewController {
     }
     
     func setVideoMuted(_ muted: Bool, forUid uid: UInt) {
-        fetchSessionOfUid(uid)?.isVideoMuted = muted
+        fetchSession(of: uid)?.isVideoMuted = muted
     }
     
     func updateSelfViewVisiable() {
@@ -348,19 +346,11 @@ private extension RoomViewController {
     }
     
     //MARK: - alert
-    func alertEngineString(_ string: String) {
-        alertString("Engine: \(string)")
-    }
-    
-    func alertAppString(_ string: String) {
-        alertString("App: \(string)")
-    }
-    
-    func alertString(_ string: String) {
+    func alert(string: String) {
         guard !string.isEmpty else {
             return
         }
-        chatMessageVC?.appendAlert(string)
+        chatMessageVC?.append(alert: string)
     }
 }
 
@@ -383,7 +373,7 @@ private extension RoomViewController {
         let code = agoraKit.joinChannel(byKey: nil, channelName: roomName, info: nil, uid: 0, joinSuccess: nil)
         if code != 0 {
             DispatchQueue.main.async(execute: {
-                self.alertEngineString("Join channel failed: \(code)")
+                self.alert(string: "Join channel failed: \(code)")
             })
         }
         
@@ -426,10 +416,10 @@ private extension RoomViewController {
     }
     
     //MARK: - data channel
-    func sendText(_ text: String) {
+    func send(text: String) {
         if dataChannelId > 0, let data = text.data(using: String.Encoding.utf8) {
             agoraKit.sendStreamMessage(dataChannelId, data: data)
-            chatMessageVC?.appendChat(text, fromUid: 0)
+            chatMessageVC?.append(chat: text, fromUid: 0)
         }
     }
 }
@@ -437,31 +427,30 @@ private extension RoomViewController {
 //MARK: - agora media kit delegate
 extension RoomViewController: AgoraRtcEngineDelegate {
     func rtcEngineConnectionDidInterrupted(_ engine: AgoraRtcEngineKit!) {
-        alertEngineString("Connection Interrupted")
+        alert(string: "Connection Interrupted")
     }
     
     func rtcEngineConnectionDidLost(_ engine: AgoraRtcEngineKit!) {
-        alertEngineString("Connection Lost")
+        alert(string: "Connection Lost")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, didOccurError errorCode: AgoraRtcErrorCode) {
-        alertEngineString("errorCode \(errorCode.rawValue)")
+        alert(string: "errorCode \(errorCode.rawValue)")
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
-        let userSession = videoSessionOfUid(uid)
+        let userSession = videoSession(of: uid)
         let sie = size.fixedSize()
         userSession.size = sie
-        userSession.updateMediaInfo(size)
+        userSession.updateMediaInfo(resolution: size)
         agoraKit.setupRemoteVideo(userSession.canvas)
     }
     
     // first local video frame
     func rtcEngine(_ engine: AgoraRtcEngineKit!, firstLocalVideoFrameWith size: CGSize, elapsed: Int) {
         if let selfSession = videoSessions.first {
-            let fixedSize = size.fixedSize()
-            selfSession.size = fixedSize
-            updateInterfaceWithSessions(videoSessions)
+            selfSession.size = size.fixedSize()
+            updateInterface(with: videoSessions)
         }
     }
     
@@ -490,8 +479,8 @@ extension RoomViewController: AgoraRtcEngineDelegate {
     
     //remote stat
     func rtcEngine(_ engine: AgoraRtcEngineKit!, remoteVideoStats stats: AgoraRtcRemoteVideoStats!) {
-        if let stats = stats, let session = fetchSessionOfUid(stats.uid) {
-            session.updateMediaInfo(CGSize(width: CGFloat(stats.width), height: CGFloat(stats.height)), bitRate: Int(stats.receivedBitrate), fps: Int(stats.receivedFrameRate))
+        if let stats = stats, let session = fetchSession(of: stats.uid) {
+            session.updateMediaInfo(resolution: CGSize(width: CGFloat(stats.width), height: CGFloat(stats.height)), bitRate: Int(stats.receivedBitrate), fps: Int(stats.receivedFrameRate))
         }
     }
     
@@ -504,11 +493,11 @@ extension RoomViewController: AgoraRtcEngineDelegate {
         guard let data = data, let string = String(data: data, encoding: String.Encoding.utf8) , !string.isEmpty else {
             return
         }
-        chatMessageVC?.appendChat(string, fromUid: Int64(uid))
+        chatMessageVC?.append(chat: string, fromUid: Int64(uid))
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit!, didOccurStreamMessageErrorFromUid uid: UInt, streamId: Int, error: Int, missed: Int, cached: Int) {
-        chatMessageVC?.appendAlert("Data channel error: \(error)")
+        chatMessageVC?.append(alert: "Data channel error: \(error)")
     }
 }
 

@@ -15,24 +15,24 @@ class Window {
     fileprivate(set) var image: NSImage!
     
     init?(windowDic: NSDictionary) {
-        let windowBounds = windowDic[Window.convertCFString(kCGWindowBounds)] as! CFDictionary
+        let windowBounds = windowDic[Window.convert(CFString: kCGWindowBounds)] as! CFDictionary
         let bounds = CGRect(dictionaryRepresentation: windowBounds)
         guard bounds != nil && bounds!.width > 100 && bounds!.height > 100 else {
             return nil
         }
         
-        let idNumber = windowDic[Window.convertCFString(kCGWindowNumber)] as! CFNumber
-        let id = Window.convertCFNumber(idNumber)
+        let idNumber = windowDic[Window.convert(CFString: kCGWindowNumber)] as! CFNumber
+        let id = Window.convert(CFNumber: idNumber)
         var name: String?
-        if let ownerName = windowDic[Window.convertCFString(kCGWindowOwnerName)] {
+        if let ownerName = windowDic[Window.convert(CFString: kCGWindowOwnerName)] {
             let cfName = ownerName as! CFString
-            name = Window.convertCFString(cfName)
+            name = Window.convert(CFString: cfName)
         }
         if let name = name , name == "Dock" {
             return nil
         }
         
-        let image = Window.imageOfWindow(id)
+        let image = Window.image(of: id)
         
         self.id = id
         self.name = name ?? "Unknown"
@@ -48,7 +48,7 @@ class Window {
         return window
     }
     
-    fileprivate static func imageOfWindow(_ windowId: CGWindowID) -> NSImage {
+    fileprivate static func image(of windowId: CGWindowID) -> NSImage {
         if let screenShot = CGWindowListCreateImage(CGRect.null, .optionIncludingWindow, CGWindowID(windowId), CGWindowImageOption()) {
             let bitmapRep = NSBitmapImageRep(cgImage: screenShot)
             let image = NSImage()
@@ -106,13 +106,13 @@ class WindowList {
 }
 
 private extension Window {
-    class func convertCFString(_ cfString: CFString) -> String {
+    class func convert(CFString cfString: CFString) -> String {
         let string = cfString as NSString
         return string as String
         
     }
     
-    class func convertCFNumber(_ cfNumber: CFNumber) -> CGWindowID {
+    class func convert(CFNumber cfNumber: CFNumber) -> CGWindowID {
         let number = cfNumber as NSNumber
         return number.uint32Value
     }

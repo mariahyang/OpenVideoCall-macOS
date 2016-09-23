@@ -22,7 +22,7 @@ class ChatMessageCellView: NSTableCellView {
         messageLabel?.cell?.isScrollable = false
     }
     
-    func setMessage(_ message: Message) {
+    func set(with message: Message) {
         messageLabel.stringValue = message.text
         
         colorView?.wantsLayer = true

@@ -29,7 +29,6 @@
 		07C2CFE81D6C291C00C84349 /* KeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFE11D6C291C00C84349 /* KeyCenter.swift */; };
 		07C2CFE91D6C291C00C84349 /* MediaCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFE21D6C291C00C84349 /* MediaCharacter.swift */; };
 		07C2CFEA1D6C291C00C84349 /* MediaInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFE31D6C291C00C84349 /* MediaInfo.swift */; };
-		07C2CFF21D6C299400C84349 /* SessionMediaInfoCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFEE1D6C299400C84349 /* SessionMediaInfoCenter.swift */; };
 		07C2CFF31D6C299400C84349 /* VideoSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFEF1D6C299400C84349 /* VideoSession.swift */; };
 		07C2CFF41D6C299400C84349 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFF01D6C299400C84349 /* VideoView.swift */; };
 		07C2CFF51D6C299400C84349 /* VideoViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFF11D6C299400C84349 /* VideoViewLayout.swift */; };
@@ -69,7 +68,6 @@
 		07C2CFE11D6C291C00C84349 /* KeyCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCenter.swift; sourceTree = "<group>"; };
 		07C2CFE21D6C291C00C84349 /* MediaCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCharacter.swift; sourceTree = "<group>"; };
 		07C2CFE31D6C291C00C84349 /* MediaInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaInfo.swift; sourceTree = "<group>"; };
-		07C2CFEE1D6C299400C84349 /* SessionMediaInfoCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionMediaInfoCenter.swift; sourceTree = "<group>"; };
 		07C2CFEF1D6C299400C84349 /* VideoSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSession.swift; sourceTree = "<group>"; };
 		07C2CFF01D6C299400C84349 /* VideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VideoView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		07C2CFF11D6C299400C84349 /* VideoViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = VideoViewLayout.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -163,7 +161,6 @@
 				07C2CFCB1D6C281900C84349 /* ReplacementSegue.swift */,
 				07C2CFC61D6C281900C84349 /* ChatMessageCellView.swift */,
 				07C2CFD81D6C282400C84349 /* WindowsCenter.swift */,
-				07C2CFEE1D6C299400C84349 /* SessionMediaInfoCenter.swift */,
 				07C2CFEF1D6C299400C84349 /* VideoSession.swift */,
 				07C2CFF01D6C299400C84349 /* VideoView.swift */,
 				07C2CFF11D6C299400C84349 /* VideoViewLayout.swift */,
@@ -287,7 +284,6 @@
 				07C2CFCF1D6C281900C84349 /* ChatMessageCellView.swift in Sources */,
 				07C2CFE61D6C291C00C84349 /* CommonExtensions.swift in Sources */,
 				07C2CFD51D6C281900C84349 /* MainViewController.swift in Sources */,
-				07C2CFF21D6C299400C84349 /* SessionMediaInfoCenter.swift in Sources */,
 				07C2CFB81D6C26F300C84349 /* AppDelegate.swift in Sources */,
 				07C2CFD01D6C281900C84349 /* ChatMessageViewController.swift in Sources */,
 				07C2CFD41D6C281900C84349 /* ReplacementSegue.swift in Sources */,
