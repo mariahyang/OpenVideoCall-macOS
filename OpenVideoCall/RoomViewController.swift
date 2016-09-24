@@ -358,9 +358,8 @@ private extension RoomViewController {
 private extension RoomViewController {
     func loadAgoraKit() {
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-        
+        agoraKit.setChannelProfile(.channelProfile_Communication)
         agoraKit.enableVideo()
-        agoraKit.setChannelProfile(.channelProfile_Free)
         agoraKit.setVideoProfile(videoProfile, swapWidthAndHeight: false)
         
         addLocalSession()
