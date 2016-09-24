@@ -361,7 +361,7 @@ private extension RoomViewController {
         
         agoraKit.enableVideo()
         agoraKit.setChannelProfile(.channelProfile_Free)
-        agoraKit.setVideoProfile(videoProfile)
+        agoraKit.setVideoProfile(videoProfile, swapWidthAndHeight: false)
         
         addLocalSession()
         agoraKit.startPreview()
