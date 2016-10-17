@@ -86,6 +86,8 @@ class DevicesViewController: NSViewController {
         cameraPreviewView.layer?.backgroundColor = NSColor.black.cgColor
         
         configButtonStyle()
+        
+        agoraKit.monitorDeviceChange(true)
         loadDevices()
     }
     
@@ -96,6 +98,9 @@ class DevicesViewController: NSViewController {
     
     override func viewWillDisappear() {
         super.viewWillDisappear()
+        
+        agoraKit.monitorDeviceChange(false)
+        
         if couldTest {
             if isInputTesting {
                 isInputTesting = false

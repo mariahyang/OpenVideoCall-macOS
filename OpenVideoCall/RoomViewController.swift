@@ -255,8 +255,10 @@ private extension RoomViewController {
         window.delegate = self
         window.collectionBehavior = [.fullScreenPrimary]
         
-        window.minSize = CGSize(width: 960, height: 600)
+        let minSize = CGSize(width: 960, height: 600)
+        window.minSize = minSize
         window.maxSize = CGSize(width: CGFloat(FLT_MAX), height: CGFloat(FLT_MAX))
+        window.setContentSize(minSize)
     }
     
     func updateInterface(with sessions: [VideoSession]) {
