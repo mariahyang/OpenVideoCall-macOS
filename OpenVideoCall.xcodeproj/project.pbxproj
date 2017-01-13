@@ -39,7 +39,18 @@
 		07C2D0141D6C30B000C84349 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C2D0131D6C30B000C84349 /* CoreMedia.framework */; };
 		07C2D0181D6C30D300C84349 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C2D0171D6C30D300C84349 /* CoreAudio.framework */; };
 		07C2D01A1D6C30DE00C84349 /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C2D0191D6C30DE00C84349 /* CoreWLAN.framework */; };
+		07F531C71E28B237009BFE58 /* OpenVideoCallUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F531C61E28B237009BFE58 /* OpenVideoCallUITests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		07F531C91E28B237009BFE58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07C2CFAC1D6C26F300C84349 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07C2CFB31D6C26F300C84349;
+			remoteInfo = OpenVideoCall;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		073177F81D8009B20062A68C /* AgoraRtcEngineKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AgoraRtcEngineKit.framework; sourceTree = "<group>"; };
@@ -79,6 +90,9 @@
 		07C2D0151D6C30C000C84349 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		07C2D0171D6C30D300C84349 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		07C2D0191D6C30DE00C84349 /* CoreWLAN.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreWLAN.framework; path = System/Library/Frameworks/CoreWLAN.framework; sourceTree = SDKROOT; };
+		07F531C41E28B237009BFE58 /* OpenVideoCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenVideoCallUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07F531C61E28B237009BFE58 /* OpenVideoCallUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVideoCallUITests.swift; sourceTree = "<group>"; };
+		07F531C81E28B237009BFE58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +107,13 @@
 				073177F91D8009B20062A68C /* AgoraRtcEngineKit.framework in Frameworks */,
 				07C2D0101D6C30A300C84349 /* VideoToolbox.framework in Frameworks */,
 				07C2D00E1D6C309D00C84349 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07F531C11E28B237009BFE58 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				07C2CFB61D6C26F300C84349 /* OpenVideoCall */,
+				07F531C51E28B237009BFE58 /* OpenVideoCallUITests */,
 				07C2CFB51D6C26F300C84349 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				07C2CFB41D6C26F300C84349 /* OpenVideoCall.app */,
+				07F531C41E28B237009BFE58 /* OpenVideoCallUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -199,6 +222,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		07F531C51E28B237009BFE58 /* OpenVideoCallUITests */ = {
+			isa = PBXGroup;
+			children = (
+				07F531C61E28B237009BFE58 /* OpenVideoCallUITests.swift */,
+				07F531C81E28B237009BFE58 /* Info.plist */,
+			);
+			path = OpenVideoCallUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -219,19 +251,42 @@
 			productReference = 07C2CFB41D6C26F300C84349 /* OpenVideoCall.app */;
 			productType = "com.apple.product-type.application";
 		};
+		07F531C31E28B237009BFE58 /* OpenVideoCallUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07F531CD1E28B237009BFE58 /* Build configuration list for PBXNativeTarget "OpenVideoCallUITests" */;
+			buildPhases = (
+				07F531C01E28B237009BFE58 /* Sources */,
+				07F531C11E28B237009BFE58 /* Frameworks */,
+				07F531C21E28B237009BFE58 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				07F531CA1E28B237009BFE58 /* PBXTargetDependency */,
+			);
+			name = OpenVideoCallUITests;
+			productName = OpenVideoCallUITests;
+			productReference = 07F531C41E28B237009BFE58 /* OpenVideoCallUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		07C2CFAC1D6C26F300C84349 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Agora;
 				TargetAttributes = {
 					07C2CFB31D6C26F300C84349 = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0800;
+					};
+					07F531C31E28B237009BFE58 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 07C2CFB31D6C26F300C84349;
 					};
 				};
 			};
@@ -249,6 +304,7 @@
 			projectRoot = "";
 			targets = (
 				07C2CFB31D6C26F300C84349 /* OpenVideoCall */,
+				07F531C31E28B237009BFE58 /* OpenVideoCallUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -261,6 +317,13 @@
 				074473601D6C428900CA030C /* test.wav in Resources */,
 				07C2CFBC1D6C26F300C84349 /* Assets.xcassets in Resources */,
 				07C2CFBF1D6C26F300C84349 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07F531C21E28B237009BFE58 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +359,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07F531C01E28B237009BFE58 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07F531C71E28B237009BFE58 /* OpenVideoCallUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		07F531CA1E28B237009BFE58 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 07C2CFB31D6C26F300C84349 /* OpenVideoCall */;
+			targetProxy = 07F531C91E28B237009BFE58 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		07C2CFBD1D6C26F300C84349 /* Main.storyboard */ = {
@@ -436,6 +515,37 @@
 			};
 			name = Release;
 		};
+		07F531CB1E28B237009BFE58 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = OpenVideoCallUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.OpenVideoCallUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = OpenVideoCall;
+			};
+			name = Debug;
+		};
+		07F531CC1E28B237009BFE58 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = OpenVideoCallUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.OpenVideoCallUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = OpenVideoCall;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -456,6 +566,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		07F531CD1E28B237009BFE58 /* Build configuration list for PBXNativeTarget "OpenVideoCallUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07F531CB1E28B237009BFE58 /* Debug */,
+				07F531CC1E28B237009BFE58 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
