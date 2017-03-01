@@ -87,7 +87,6 @@ class DevicesViewController: NSViewController {
         
         configButtonStyle()
         
-        agoraKit.monitorDeviceChange(true)
         loadDevices()
     }
     
@@ -98,8 +97,6 @@ class DevicesViewController: NSViewController {
     
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        
-        agoraKit.monitorDeviceChange(false)
         
         if couldTest {
             if isInputTesting {
