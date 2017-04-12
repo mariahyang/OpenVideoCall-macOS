@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		073177F91D8009B20062A68C /* AgoraRtcEngineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073177F81D8009B20062A68C /* AgoraRtcEngineKit.framework */; };
 		074473601D6C428900CA030C /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0744735F1D6C428900CA030C /* test.wav */; };
 		07C2CFB81D6C26F300C84349 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C2CFB71D6C26F300C84349 /* AppDelegate.swift */; };
 		07C2CFBC1D6C26F300C84349 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07C2CFBB1D6C26F300C84349 /* Assets.xcassets */; };
@@ -39,6 +38,8 @@
 		07C2D0141D6C30B000C84349 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C2D0131D6C30B000C84349 /* CoreMedia.framework */; };
 		07C2D0181D6C30D300C84349 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C2D0171D6C30D300C84349 /* CoreAudio.framework */; };
 		07C2D01A1D6C30DE00C84349 /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C2D0191D6C30DE00C84349 /* CoreWLAN.framework */; };
+		07D29C5F1E9E1F9900C3583C /* AgoraRtcEngineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D29C5E1E9E1F9900C3583C /* AgoraRtcEngineKit.framework */; };
+		07D29C621E9E1FC200C3583C /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D29C611E9E1FC200C3583C /* libresolv.tbd */; };
 		07F531C71E28B237009BFE58 /* OpenVideoCallUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F531C61E28B237009BFE58 /* OpenVideoCallUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +54,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		073177F81D8009B20062A68C /* AgoraRtcEngineKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AgoraRtcEngineKit.framework; sourceTree = "<group>"; };
 		0744735F1D6C428900CA030C /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
 		07C2CFB41D6C26F300C84349 /* OpenVideoCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenVideoCall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07C2CFB71D6C26F300C84349 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +90,8 @@
 		07C2D0151D6C30C000C84349 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		07C2D0171D6C30D300C84349 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		07C2D0191D6C30DE00C84349 /* CoreWLAN.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreWLAN.framework; path = System/Library/Frameworks/CoreWLAN.framework; sourceTree = SDKROOT; };
+		07D29C5E1E9E1F9900C3583C /* AgoraRtcEngineKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AgoraRtcEngineKit.framework; sourceTree = "<group>"; };
+		07D29C611E9E1FC200C3583C /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		07F531C41E28B237009BFE58 /* OpenVideoCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenVideoCallUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07F531C61E28B237009BFE58 /* OpenVideoCallUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVideoCallUITests.swift; sourceTree = "<group>"; };
 		07F531C81E28B237009BFE58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,11 +102,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07D29C621E9E1FC200C3583C /* libresolv.tbd in Frameworks */,
 				07C2D01A1D6C30DE00C84349 /* CoreWLAN.framework in Frameworks */,
 				07C2D0181D6C30D300C84349 /* CoreAudio.framework in Frameworks */,
 				07C2D0141D6C30B000C84349 /* CoreMedia.framework in Frameworks */,
 				07C2D0121D6C30AB00C84349 /* AudioToolbox.framework in Frameworks */,
-				073177F91D8009B20062A68C /* AgoraRtcEngineKit.framework in Frameworks */,
+				07D29C5F1E9E1F9900C3583C /* AgoraRtcEngineKit.framework in Frameworks */,
 				07C2D0101D6C30A300C84349 /* VideoToolbox.framework in Frameworks */,
 				07C2D00E1D6C309D00C84349 /* AVFoundation.framework in Frameworks */,
 			);
@@ -120,21 +123,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		073177F71D8009B20062A68C /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				073177F81D8009B20062A68C /* AgoraRtcEngineKit.framework */,
-			);
-			path = libs;
-			name = libs;
-			sourceTree = "<group>";
-		};
 		07C2CFAB1D6C26F300C84349 = {
 			isa = PBXGroup;
 			children = (
 				07C2CFB61D6C26F300C84349 /* OpenVideoCall */,
 				07F531C51E28B237009BFE58 /* OpenVideoCallUITests */,
 				07C2CFB51D6C26F300C84349 /* Products */,
+				07D29C601E9E1FC200C3583C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -153,7 +148,7 @@
 				07C2CFEC1D6C292400C84349 /* Controllers */,
 				07C2CFED1D6C294900C84349 /* Views */,
 				07C2CFF61D6C29A100C84349 /* Models */,
-				073177F71D8009B20062A68C /* libs */,
+				07D29C5E1E9E1F9900C3583C /* AgoraRtcEngineKit.framework */,
 				07C2D01B1D6C30EC00C84349 /* Frameworks */,
 				07C2CFBB1D6C26F300C84349 /* Assets.xcassets */,
 				07C2CFB71D6C26F300C84349 /* AppDelegate.swift */,
@@ -218,6 +213,14 @@
 				07C2D0111D6C30AB00C84349 /* AudioToolbox.framework */,
 				07C2D00F1D6C30A300C84349 /* VideoToolbox.framework */,
 				07C2D00D1D6C309D00C84349 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		07D29C601E9E1FC200C3583C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				07D29C611E9E1FC200C3583C /* libresolv.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -484,7 +487,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OpenVideoCall/libs",
+					"$(PROJECT_DIR)/OpenVideoCall",
 				);
 				INFOPLIST_FILE = OpenVideoCall/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -504,7 +507,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OpenVideoCall/libs",
+					"$(PROJECT_DIR)/OpenVideoCall",
 				);
 				INFOPLIST_FILE = OpenVideoCall/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -574,6 +577,7 @@
 				07F531CC1E28B237009BFE58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
