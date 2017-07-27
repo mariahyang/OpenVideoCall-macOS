@@ -407,7 +407,7 @@ private extension RoomViewController {
     //MARK: - screen sharing
     func startShareWindow(_ window: Window) {
         let windowId = window.id
-        agoraKit?.startScreenCapture(UInt(windowId))
+        agoraKit?.startScreenCapture(UInt(windowId), withCaptureFreq: 15, andRect: CGRect.zero )
         videoSessions.first?.hostingView.switchToScreenShare(windowId == 0 || window.name == "Agora Video Call" || window.name == "Full Screen")
     }
     
